@@ -1,0 +1,12 @@
+[
+  {
+    "case_ref": "SF-2026-0001",
+    "title": "Credential phishing campaign",
+    "severity": "high"
+  },
+  {
+    "case_ref": "SF-2026-0002",
+    "title": "Scam wallet laundering cluster",
+    "severity": "critical"
+  }
+]
