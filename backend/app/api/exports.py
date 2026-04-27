@@ -2,13 +2,20 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
+from app.core.security import require_api_key
 from app.models.case import Case, CaseEntity
 
 router = APIRouter(prefix='/exports', tags=['exports'])
 
 
 @router.get('/ioc')
-def export_ioc(format: str = Query('json', pattern='^(json|csv)$'), case_id: int | None = None, db: Session = Depends(get_db)):
+def export_ioc(
+    format: str = Query('json', pattern='^(json|csv)$'),
+    case_id: int | None = None,
+    actor: str = Depends(require_api_key),
+    db: Session = Depends(get_db),
+):
+    del actor
     query = db.query(CaseEntity)
     if case_id is not None:
         case = db.query(Case).filter(Case.id == case_id).first()
